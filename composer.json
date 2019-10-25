@@ -1,0 +1,17 @@
+{
+    "name": "wuchuheng\/weather",
+    "description": "my first package",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wuchuheng",
+            "email": "root@wuchuheng.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Wuchuheng\\Weather\\": "src"
+        }
+    }
+}
