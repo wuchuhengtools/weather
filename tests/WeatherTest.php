@@ -32,10 +32,60 @@ class WeatherTest extends TestCase
     public function testGetWeatherWithInvalidFormat()
     {
         $w = new Weather('mock-key');
-
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid response format: array');
         $w->getWeather('深圳', 'base', 'array');
         $this->fail('Failed to assert getWeather throw exception with invalid argument.');
+    }
+
+    /**
+     * 测试 getWeather
+     *
+     */
+    public function testGetWeather()
+    {
+        $response = new response(200, [], '{"success": true}');
+        $Client = \Mockery::mock(Client::class);
+        $Client->allows()
+            ->get(
+                    'https://restapi.amap.com/v3/weather/weatherInfo',
+                    [
+                        'query' => [
+                            'key'        => 'mock-key',
+                            'city'       => '深圳',
+                            'output'     => 'json',
+                            'extensions' => 'base'
+                        ]
+                    ]
+                )
+            ->andReturn($response);
+        $w = \Mockery::mock(Weather::class, ['mock-key'])
+            ->makePartial();
+        $w->allows()->getHttpClient()->andReturn($Client);
+        // 断言json模拟请求
+        $this->assertSame(['success' => true], $w->getWeather('深圳'));
+        
+        $Response = new Response(200, [], '<hello>content</hello>');
+        $Client = \Mockery::mock(Client::class);
+        $Client->allows()
+            ->get(
+                    'https://restapi.amap.com/v3/weather/weatherInfo',
+                    [
+                        'query' => [
+                            'key'        => 'mock-key',
+                            'city'       => '深圳',
+                            'output'     => 'xml',
+                            'extensions' => 'all'
+                        ]
+                    ]
+                )
+            ->andReturn($Response);
+        $W = \Mockery::mock(Weather::class, ['mock-key'])
+            ->makePartial();
+        $W->allows()
+            ->getHttpClient()
+            ->andReturn($Client);
+        // 断言模拟请求后的XML数据
+        $this->assertSame('<hello>content</hello>', $W->getWeather('深圳', 'all', 'xml'));
     }
 }
