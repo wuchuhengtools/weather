@@ -88,4 +88,27 @@ class WeatherTest extends TestCase
         // 断言模拟请求后的XML数据
         $this->assertSame('<hello>content</hello>', $W->getWeather('深圳', 'all', 'xml'));
     }
+
+    /**
+     * 测试getWeather http 请求异常
+     *
+     */
+    public function testGetWeatherWithGuzzleRuntimeException()
+    {
+        // 定义一个模拟超时异常
+        $Client = \Mockery::mock(Clent::class);
+        $Client->allows()
+            ->get(new AnyArgs())
+            ->andThrow(new \Exception('request timeout'));
+        $W = \Mockery::mock(Weather::class, ['mock-key'])
+            ->makePartial();
+        $W->allows()
+            ->getHttpClient()
+            ->andReturn($Client);
+        // 断言预期的结果
+        $this->expectException(HttpException::class);
+        $this->expectExceptionMessage('request timeout');
+
+        $W->getWeather('深圳');
+    }
 }
