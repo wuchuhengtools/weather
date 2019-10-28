@@ -111,4 +111,29 @@ class WeatherTest extends TestCase
 
         $W->getWeather('深圳');
     }
+    
+    /**
+     * to test the getHttpClient function of request object 
+     *
+     */
+    public function testGetHttpClient()
+    {
+        $W = new Weather('mock-key');
+        $Client = $W->getHttpClient();
+        $this->assertInstanceOf(ClientInterface::class, $Client);
+    }  
+
+    /**
+     * to check the guzleOption function and get the expection 
+     *
+     */
+    public function testGuzzleOptions() 
+    {
+        $W = new Weather('mock-key');
+        //断言默认参数
+        $this->assertNull($W->getHttpClient()->getConfig('timeout'));
+        $W->guzzleOptions(['timeout' => 5000]);
+        // 断言设置的参数
+        $this->assertSame(5000, $W->getHttpClient()->getConfig('timeout'));
+    }
 }
