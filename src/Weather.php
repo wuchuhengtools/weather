@@ -1,4 +1,9 @@
 <?php
+/**
+ * @author wuchuheng
+ * @email  root@wuchuheng
+ * @date   2019-11-02
+ */
 
 namespace Wuchuheng\Weather;
 
@@ -11,7 +16,7 @@ class Weather
     protected $key;
     protected $_guzzleOptions= [];
 
-    public function __construct(string $key)
+    public function __construct($key)
     {
         $this->key = $key;
     }

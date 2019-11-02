@@ -10,8 +10,14 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^6.4",
-        "phpunit/phpunit": "^8.4",
         "mockery/mockery": "^1.2"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wuchuheng\\Weather\\ServiceProvider"
+            ]
+        }
     },
     "autoload": {
         "psr-4": {
