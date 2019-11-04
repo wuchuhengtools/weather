@@ -10,7 +10,8 @@
     ],
     "require": {
         "guzzlehttp/guzzle": "^6.4",
-        "mockery/mockery": "^1.2"
+        "mockery/mockery": "^1.2",
+        "phpunit/phpunit": ">=6.0.0 <=8.4.2"
     },
     "extra": {
         "laravel": {
