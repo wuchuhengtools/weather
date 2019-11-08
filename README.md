@@ -3,6 +3,7 @@
 <p align="center">:rainbow: 基于高德开放平台的 PHP 天气信息组件。</p>
 
 [![Build Status](https://travis-ci.org/wuchuhengtools/weather.svg?branch=master)](https://travis-ci.org/wuchuhengtools/weather)
+[![StyleCI](https://github.styleci.io/repos/217517699/shield?branch=master)](https://github.styleci.io/repos/217517699)
 
 
 ## 安装
