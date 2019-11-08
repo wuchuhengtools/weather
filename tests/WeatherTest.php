@@ -26,8 +26,7 @@ class WeatherTest extends TestCase
     }
 
     /**
-     * 测试getWeather $format变量
-     *
+     * 测试getWeather $format变量.
      */
     public function testGetWeatherWithInvalidFormat()
     {
@@ -39,8 +38,7 @@ class WeatherTest extends TestCase
     }
 
     /**
-     * 测试 getWeather
-     *
+     * 测试 getWeather.
      */
     public function testGetWeather()
     {
@@ -51,11 +49,11 @@ class WeatherTest extends TestCase
                     'https://restapi.amap.com/v3/weather/weatherInfo',
                     [
                         'query' => [
-                            'key'        => 'mock-key',
-                            'city'       => '深圳',
-                            'output'     => 'json',
-                            'extensions' => 'base'
-                        ]
+                            'key' => 'mock-key',
+                            'city' => '深圳',
+                            'output' => 'json',
+                            'extensions' => 'base',
+                        ],
                     ]
                 )
             ->andReturn($response);
@@ -64,7 +62,7 @@ class WeatherTest extends TestCase
         $w->allows()->getHttpClient()->andReturn($Client);
         // 断言json模拟请求
         $this->assertSame(['success' => true], $w->getWeather('深圳'));
-        
+
         $Response = new Response(200, [], '<hello>content</hello>');
         $Client = \Mockery::mock(Client::class);
         $Client->allows()
@@ -72,11 +70,11 @@ class WeatherTest extends TestCase
                     'https://restapi.amap.com/v3/weather/weatherInfo',
                     [
                         'query' => [
-                            'key'        => 'mock-key',
-                            'city'       => '深圳',
-                            'output'     => 'xml',
-                            'extensions' => 'all'
-                        ]
+                            'key' => 'mock-key',
+                            'city' => '深圳',
+                            'output' => 'xml',
+                            'extensions' => 'all',
+                        ],
                     ]
                 )
             ->andReturn($Response);
@@ -90,8 +88,7 @@ class WeatherTest extends TestCase
     }
 
     /**
-     * 测试getWeather http 请求异常
-     *
+     * 测试getWeather http 请求异常.
      */
     public function testGetWeatherWithGuzzleRuntimeException()
     {
@@ -111,23 +108,21 @@ class WeatherTest extends TestCase
 
         $W->getWeather('深圳');
     }
-    
+
     /**
-     * to test the getHttpClient function of request object 
-     *
+     * to test the getHttpClient function of request object.
      */
     public function testGetHttpClient()
     {
         $W = new Weather('mock-key');
         $Client = $W->getHttpClient();
         $this->assertInstanceOf(ClientInterface::class, $Client);
-    }  
+    }
 
     /**
-     * to check the guzleOption function and get the expection 
-     *
+     * to check the guzleOption function and get the expection.
      */
-    public function testGuzzleOptions() 
+    public function testGuzzleOptions()
     {
         $W = new Weather('mock-key');
         //断言默认参数
