@@ -34,7 +34,7 @@ class WeatherTest extends TestCase
         $w = new Weather('mock-key');
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Invalid response format: array');
-        $w->getWeather('深圳', 'base', 'array');
+        $w->getWeather('深圳', 'live', 'array');
         $this->fail('Failed to assert getWeather throw exception with invalid argument.');
     }
 
@@ -86,7 +86,7 @@ class WeatherTest extends TestCase
             ->getHttpClient()
             ->andReturn($Client);
         // 断言模拟请求后的XML数据
-        $this->assertSame('<hello>content</hello>', $W->getWeather('深圳', 'all', 'xml'));
+        $this->assertSame('<hello>content</hello>', $W->getWeather('深圳', 'forcast', 'xml'));
     }
 
     /**

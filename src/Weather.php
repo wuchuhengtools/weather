@@ -39,20 +39,23 @@ class Weather
      *  @format string 返回的数据格式json|xml
      *
      */
-    public function getWeather($city, string $type = 'base', string $format = 'json')
+    public function getWeather($city, string $type = 'live', string $format = 'json')
     {
+        $types = [
+            'live'    => 'base',
+            'forcast' => 'all'
+        ];
         $url = 'https://restapi.amap.com/v3/weather/weatherInfo';
-
         if (!in_array(strtolower($format), ['json', 'xml']))
             throw new InvalidArgumentException('Invalid response format: ' . $format);
-        if (!in_array($type, ['all', 'base'])) 
+        if (!in_array($type, array_keys($types))) 
            throw new InvalidArgumentException('Invalid type value(base/all) ' . $type);
         
        $query = array_filter([
            'key' => $this->key,
            'city' => $city,
            'output' => $format,
-           'extensions' =>  $type,
+           'extensions' =>  $types[$type],
         ]);
         try {
             $response = $this->getHttpClient()
