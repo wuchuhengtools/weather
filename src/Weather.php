@@ -39,6 +39,10 @@ class Weather
      *  @format string 返回的数据格式json|xml
      *
      */
+
+
+
+
     public function getWeather($city, string $type = 'live', string $format = 'json')
     {
         $types = [
